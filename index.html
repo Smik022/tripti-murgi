@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BRACU Tripti Chicken feed review</title>
+<script type="text/javascript" src="https://tiiny.host/ad-script.js"></script><script defer data-domain="tripti-murgi.tiiny.site" src="https://analytics.tiiny.site/js/plausible.js"></script></head>
+ <style>
+    body {
+      background-image: url('https://www.bracu.ac.bd/sites/default/files/resources/media/bracu_logo.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: fit;
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Other CSS styles for the content */
+    h1, h2 {
+      text-align: center;
+    }
+
+    #reviewForm {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+    }
+
+    #ratings {
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+    }
+  </style>
+<body>
+  <h1>Food Review System for Tripti</h1>
+  <form id="reviewForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+
+    <label for="mealType">Meal Type:</label>
+    <select id="mealType" required>
+      <option value="breakfast">Breakfast</option>
+      <option value="lunch">Lunch</option>
+      <option value="dinner">Dinner</option>
+    </select>
+<br>
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" id="rating" min="1" max="5" required>
+
+    <button type="submit">Submit Review</button>
+  </form>
+
+  <div id="ratings">
+    <h2>Ratings</h2>
+    <p>Breakfast: <span id="breakfastRating">0</span> (Total Reviews: <span id="breakfastTotal">0</span>)</p>
+    <p>Lunch: <span id="lunchRating">0</span> (Total Reviews: <span id="lunchTotal">0</span>)</p>
+    <p>Dinner: <span id="dinnerRating">0</span> (Total Reviews: <span id="dinnerTotal">0</span>)</p>
+  </div>
+
+  <script>
+    // Ratings data
+    let breakfastRatings = [];
+    let lunchRatings = [];
+    let dinnerRatings = [];
+
+    // Function to update ratings
+    function updateRatings(mealType) {
+      let ratingsArray;
+      let ratingsTotal;
+      let totalReviews;
+
+      switch (mealType) {
+        case "breakfast":
+          ratingsArray = breakfastRatings;
+          ratingsTotal = document.getElementById("breakfastRating");
+          totalReviews = document.getElementById("breakfastTotal");
+          break;
+        case "lunch":
+          ratingsArray = lunchRatings;
+          ratingsTotal = document.getElementById("lunchRating");
+          totalReviews = document.getElementById("lunchTotal");
+          break;
+        case "dinner":
+          ratingsArray = dinnerRatings;
+          ratingsTotal = document.getElementById("dinnerRating");
+          totalReviews = document.getElementById("dinnerTotal");
+          break;
+      }
+
+      let sum = ratingsArray.reduce((acc, cur) => acc + cur, 0);
+      let average = sum / ratingsArray.length;
+
+      ratingsTotal.textContent = average.toFixed(1);
+      totalReviews.textContent = ratingsArray.length;
+    }
+
+    // Event listener for form submission
+    document.getElementById("reviewForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Get user input
+      const email = document.getElementById("email").value;
+      const mealType = document.getElementById("mealType").value;
+      const rating = parseInt(document.getElementById("rating").value);
+
+      // Store the rating in the corresponding array
+      switch (mealType) {
+        case "breakfast":
+          breakfastRatings.push(rating);
+          break;
+        case "lunch":
+          lunchRatings.push(rating);
+          break;
+        case "dinner":
+          dinnerRatings.push(rating);
+          break;
+      }
+
+      // Update the ratings display
+      updateRatings(mealType);
+
+      // Reset the form
+      document.getElementById("email").value = "";
+      document.getElementById("rating").value = "";
+    });
+  </script>
+</body>
+</html>
